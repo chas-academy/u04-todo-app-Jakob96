@@ -1,0 +1,9 @@
+{
+    "db": {
+        "host": "localhost",
+        "dbname": "tododb",
+        "dbuser": "todouser",
+        "dbpass": "&438r458tr%23#!",
+        "charset": "utf8"
+    }
+}

@@ -1,0 +1,22 @@
+@import "../../node_modules/bulma/css/bulma.min.css";
+@import "../../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css";
+
+ul.tasks li,
+ul.lists li {
+  background: lightseagreen;
+  border-radius: 12px;
+  color: #fff;
+  margin-bottom: 20px;
+  padding: 10px;
+
+  .buttons.is-right {
+    float: right;
+
+    .button.is-rounded {
+      border: 0;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+    }
+  }
+}
