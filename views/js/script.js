@@ -2,6 +2,7 @@ const DoneButtons = document.querySelectorAll(".toggleDone");
 const TaskDeleteButtons = document.querySelectorAll("ul.tasks .taskDelete");
 const ListDeleteButtons = document.querySelectorAll("ul.lists .listDelete");
 const ListDeleteBtn = document.querySelector(".listDelete");
+const allTasksDoneBtn = document.querySelector(".allTasksDone");
 
 function sendData(data, url) {
   let req = new XMLHttpRequest();
@@ -12,6 +13,12 @@ function sendData(data, url) {
   };
 
   req.send(data);
+}
+
+if (allTasksDoneBtn) {
+  allTasksDoneBtn.addEventListener("click", function (e) {
+    allTasksDone(e);
+  });
 }
 
 if (ListDeleteBtn) {
@@ -70,4 +77,9 @@ function removeList(e) {
       document.querySelector("li#list" + e.currentTarget.value).remove();
     }
   }
+}
+
+function allTasksDone(e) {
+  sendData("listid=" + e.currentTarget.value, "/allTasksDone");
+  location.reload();
 }

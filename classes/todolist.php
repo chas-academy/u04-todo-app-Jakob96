@@ -61,6 +61,11 @@ class todolist {
         $dbconn->update("`tasks` set done=:done WHERE ID=:ID", array(":ID" => $taskID, ":done" => $done));
     }
 
+    public function allTasksDone($listID) {
+        $dbconn = new db();
+        $dbconn->update("`tasks` set done=1 WHERE listID=:listID", array(":listID" => $listID));
+    }
+
     public function deleteTask($taskID) {
         $dbconn = new db();
         $dbconn->delete("`tasks` WHERE ID=:ID", array(":ID" => $taskID));

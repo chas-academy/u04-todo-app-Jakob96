@@ -56,6 +56,9 @@ Switch ($request) {
     case '/taskDoneToggle':
         $todolist->taskDoneToggle($_POST['taskid']);
         break;
+    case '/allTasksDone':
+        $todolist->allTasksDone($_POST['listid']);
+        break;
     case '/addTodoList':
         $listid = 0;
         $listid = $todolist->addTodoList($_POST['listtitle'], $_POST['listdescription'], $_SESSION['userID']);
