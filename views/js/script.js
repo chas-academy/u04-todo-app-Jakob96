@@ -3,6 +3,7 @@ const TaskDeleteButtons = document.querySelectorAll("ul.tasks .taskDelete");
 const ListDeleteButtons = document.querySelectorAll("ul.lists .listDelete");
 const ListDeleteBtn = document.querySelector(".listDelete");
 const allTasksDoneBtn = document.querySelector(".allTasksDone");
+const deleteDoneTasksBtn = document.querySelector(".deleteDoneTasks");
 
 function sendData(data, url) {
   let req = new XMLHttpRequest();
@@ -13,6 +14,12 @@ function sendData(data, url) {
   };
 
   req.send(data);
+}
+
+if (deleteDoneTasksBtn) {
+  deleteDoneTasksBtn.addEventListener("click", function (e) {
+    deleteTasksDone(e);
+  });
 }
 
 if (allTasksDoneBtn) {
@@ -82,4 +89,13 @@ function removeList(e) {
 function allTasksDone(e) {
   sendData("listid=" + e.currentTarget.value, "/allTasksDone");
   location.reload();
+}
+
+function deleteTasksDone(e) {
+  let result = confirm("Vill du ta bort alla klara aktiviteter?");
+
+  if (result) {
+    sendData("listid=" + e.currentTarget.value, "/deleteTasksDone");
+    location.reload();
+  }
 }
