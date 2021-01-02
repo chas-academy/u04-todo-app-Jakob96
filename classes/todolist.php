@@ -37,10 +37,6 @@ class todolist {
      return $result;
     }
 
-    public function getTodoListTasksCount($listID) {
-        return count($this->getTodoListTasks($listID));
-    }
-
     public function addTodoList($title, $description, $userID) {
         $dbconn = new db();
         $dbconn->insertInto("`lists` (`ID`, `title`, `description`, `userID`) VALUES (NULL, :title, :description, :userID);", array(":title" => $title, ":description" => $description, ":userID" => $userID));
