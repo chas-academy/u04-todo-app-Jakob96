@@ -1,7 +1,7 @@
 const DoneButtons = document.querySelectorAll(".toggleDone");
 const TaskDeleteButtons = document.querySelectorAll("ul.tasks .taskDelete");
 const ListDeleteButtons = document.querySelectorAll("ul.lists .listDelete");
-const ListDeleteBtn = document.querySelector(".listDelete");
+const ListDeleteBtn = document.querySelector(".buttons .listDelete");
 const allTasksDoneBtn = document.querySelector(".allTasksDone");
 const deleteDoneTasksBtn = document.querySelector(".deleteDoneTasks");
 
