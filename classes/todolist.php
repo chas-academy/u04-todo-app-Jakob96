@@ -19,11 +19,26 @@ class todolist {
      return $result;
     }
 
-    public function getTodoListTasks($listID, $userID) {
+    public function getTodoListTasks($userID, $listID = null, $filterDone = false) {
         $result = '';
-
+        $query = "tasks.ID, tasks.dueDate, tasks.title, tasks.description, tasks.done FROM `tasks` INNER JOIN lists ON (tasks.listID = lists.ID) WHERE lists.userID =:userID";
+        $data = array();
         $dbconn = new db();
-        $result = $dbconn->get('tasks.ID, tasks.dueDate, tasks.title, tasks.description, tasks.done FROM `tasks` INNER JOIN lists ON (tasks.listID = lists.ID) WHERE lists.userID =:userID AND lists.ID =:listID ORDER BY tasks.dueDate', array(':userID' => $userID, ':listID' => $listID));
+
+        if ($listID) {
+            $query .= " AND lists.ID =:listID";
+            $data = array(':userID' => $userID, ':listID' => $listID);
+        }
+        else {
+            $data = array(':userID' => $userID);
+        }
+
+        if ($filterDone) {
+            $query .= " AND tasks.done=0";
+        }
+
+        $query .= " ORDER BY tasks.dueDate";
+        $result = $dbconn->get($query, $data);
         
      return $result;
     }

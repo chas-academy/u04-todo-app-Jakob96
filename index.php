@@ -22,6 +22,11 @@ $todolist = new todolist();
 
 Switch ($request) {
     case '/':
+        $tasks = $todolist->getTodoListTasks($_SESSION['userID'], null, true);
+
+        $todayTasks = array_filter($tasks, function($task) {
+            return $task["dueDate"] == date("Y-m-d");
+        });
         require_once("./views/home.php");
         break;
     case '/show-lists':
@@ -33,7 +38,7 @@ Switch ($request) {
         break;
     case '/edit-list':
         $list = $todolist->getTodoList($_GET['listid'], $_SESSION['userID']); 
-        $tasks = $todolist->getTodoListTasks($_GET['listid'], $_SESSION['userID']);
+        $tasks = $todolist->getTodoListTasks($_SESSION['userID'], $_GET['listid']);
 
         if (!empty($list)) {
             require_once("./views/edit-list.php");
