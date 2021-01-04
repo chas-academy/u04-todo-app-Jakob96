@@ -1,18 +1,18 @@
 <?php
 
-class db {
+class Database {
     private static $options;
     private static $host;
-    private static $dbname;
     private static $charset;
-    private static $dbuser;
-    private static $dbpass;
+    private static $dbName;
+    private static $dbUser;
+    private static $dbPass;
     private static $dsn;
     private $pdo;
     private $stmt;
     private $lastId;
 
-    function __construct() {
+    public function __construct() {
         self::$options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -26,15 +26,15 @@ class db {
         $settings = json_decode(file_get_contents("./config/app.json"), true);
     
         self::$host = $settings["db"]["host"];
-        self::$dbname = $settings["db"]["dbname"];
+        self::$dbName = $settings["db"]["dbname"];
         self::$charset = $settings["db"]["charset"];
-        self::$dbuser = $settings["db"]["dbuser"];
-        self::$dbpass = $settings["db"]["dbpass"];
-        self::$dsn = "mysql:host=" . self::$host . ";dbname=" . self::$dbname . ";charset=" . self::$charset . ";";  
+        self::$dbUser = $settings["db"]["dbuser"];
+        self::$dbPass = $settings["db"]["dbpass"];
+        self::$dsn = "mysql:host=" . self::$host . ";dbname=" . self::$dbName . ";charset=" . self::$charset . ";";  
     }
 
     private function connect() {
-        $this->pdo = new PDO(self::$dsn, self::$dbuser, self::$dbpass, self::$options);
+        $this->pdo = new PDO(self::$dsn, self::$dbUser, self::$dbPass, self::$options);
     }
 
     private function execute($query, $data = null) {

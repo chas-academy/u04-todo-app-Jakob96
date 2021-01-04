@@ -1,18 +1,18 @@
 <?php
 
-class user {
+class User {
     private $email;
     private $ID;
 
-    function __construct($email) {
+    public function __construct($email) {
         $this->ID = 0;
         $this->email = $email;
     }
 
     public function userExists() {
         $result = false;
-        $dbconn = new db();
-        $user = $dbconn->get("* FROM `users` WHERE `email`=:email", array(":email" => $this->email), false);
+        $db = new Database();
+        $user = $db->get("* FROM `users` WHERE `email`=:email", array(":email" => $this->email), false);
  
         if ($user) {
             $result = true;
@@ -21,10 +21,9 @@ class user {
         return $result;
     }
 
-
     public function userLogin() {
-        $dbconn = new db();
-        $user = $dbconn->get("* FROM `users` WHERE `email`=:email", array(":email" => $this->email), false);
+        $db = new Database();
+        $user = $db->get("* FROM `users` WHERE `email`=:email", array(":email" => $this->email), false);
 
         if ($user) {
             $this->ID = $user["ID"];
@@ -34,8 +33,8 @@ class user {
     }
 
     public function registerUser() {
-        $dbconn = new db();
-        $dbconn->insertInto("`users` (`ID`, `email`) VALUES (NULL, :email)", array(":email" => $this->email));
+        $db = new Database();
+        $db->insertInto("`users` (`ID`, `email`) VALUES (NULL, :email)", array(":email" => $this->email));
     }
 
     public static function userSignOut() {

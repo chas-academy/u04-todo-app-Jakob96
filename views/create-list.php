@@ -1,5 +1,4 @@
-<?php require_once("head.php");
-$todolist = new todolist(); ?>
+<?php require_once("head.php"); ?>
   
   <section class="section">
     <div class="container">
