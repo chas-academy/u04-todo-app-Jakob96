@@ -11,7 +11,7 @@
       <button class="button is-info allTasksDone" value="<?php echo $list["ID"]; ?>"><i class="fas fa-check mr-1"></i>Klarmarkera alla aktiviteter</button>
       <button class="button is-warning deleteDoneTasks" value="<?php echo $list["ID"]; ?>"><i class="fas fa-trash mr-1"></i>Ta bort klara aktiviteter</button>
       <?php } ?>
-      <button class="button is-danger listDelete" value="<?php echo $list["ID"]; ?>" aria-label="Ta bort listan">
+      <button class="button is-danger listDeleteBtn" value="<?php echo $list["ID"]; ?>" aria-label="Ta bort listan">
               <i class="fas fa-trash mr-1"></i>Ta bort listan
       </button>
   </div>
