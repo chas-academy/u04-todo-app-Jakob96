@@ -3,7 +3,7 @@
   <section class="section">
     <div class="container">
 
-    <?php if (isset($_SESSION['userID']) && !empty($_SESSION['userID'])) {  var_dump($todayTasks); ?>
+    <?php if (isset($_SESSION['userID']) && !empty($_SESSION['userID'])) { ?>
       <h1 class="title">
         Mina aktiviteter
       </h1>
