@@ -10,7 +10,6 @@
 
       <ul class="lists">
         <?php if ($lists) {
-          var_dump($lists);
           foreach($lists as $list) { ?>
           <li id="<?php echo "list".$list["ID"]; ?>"><div class="buttons is-right">
             <a class="button is-active is-rounded" href="<?php echo "/edit-list?listid=".$list["ID"]; ?>" aria-label="Ändra listan">
