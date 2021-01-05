@@ -1,6 +1,15 @@
 <?php
 
+/*
+This class handles the connection to the database. DB settings is retrieved from the conf file in /config/app.json.
+
+There are predefined methods for CRUD (Create, Read, Update and Delete).
+
+Get the last inserted ID with method getLastId().
+*/
+
 class Database {
+    //Some properties is static because they should be the same during runtime
     private static $options;
     private static $host;
     private static $charset;
@@ -12,6 +21,7 @@ class Database {
     private $stmt;
     private $lastId;
 
+    //PDO options which is set on first call of the class
     public function __construct() {
         self::$options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -19,9 +29,11 @@ class Database {
             PDO::ATTR_EMULATE_PREPARES   => false,
         ]; 
 
+        //Get settings from the conf file
         self::getDBSettings();
     }
 
+    //Assign each Json key to the settings array and assign to respective class property.
     private static function getDBSettings() {
         $settings = json_decode(file_get_contents("./config/app.json"), true);
     
@@ -33,10 +45,12 @@ class Database {
         self::$dsn = "mysql:host=" . self::$host . ";dbname=" . self::$dbName . ";charset=" . self::$charset . ";";  
     }
 
+    //Creates a new pdo instance
     private function connect() {
         $this->pdo = new PDO(self::$dsn, self::$dbUser, self::$dbPass, self::$options);
     }
 
+    //This method connects and execute the provided query and data
     private function execute($query, $data = null) {
         $this->connect();
         $this->stmt = $this->pdo->prepare($query);
@@ -49,10 +63,12 @@ class Database {
         }
     }
 
+    //Get last inserted id
     public function getLastId() :int {
         return $this->lastId;
     }
 
+    //Makes a select query (read/get data)
     public function get($query, $data, $fetchAll = true) :array {
         try {
             $result = array();
@@ -76,6 +92,7 @@ class Database {
        }
     }
 
+    //Makes a insert query (add data) and updates the lastID property
     public function insertInto($query, $data) {
         try {
             $this->execute("INSERT INTO " . $query, $data);
@@ -85,6 +102,7 @@ class Database {
        }
     }
 
+    //Makes a update
     public function update($query, $data) {
         try {
             $this->execute("UPDATE " . $query, $data);
@@ -93,6 +111,7 @@ class Database {
         }
     }
 
+    //Delete query
     public function delete($query, $data) {
         try {
             $this->execute("DELETE FROM " . $query, $data);
