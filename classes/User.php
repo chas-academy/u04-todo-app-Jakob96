@@ -12,6 +12,7 @@ class User {
     public function userExists() :bool {
         $result = false;
         $db = new Database();
+        
         $user = $db->get("* FROM `users` WHERE `email`=:email", array(":email" => $this->email), false);
  
         if ($user) {

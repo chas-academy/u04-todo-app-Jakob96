@@ -2,28 +2,30 @@
 
 class ToDoList {
     public function getTodoLists($userID) :array {
-        $result = '';
-
+        $result = array();
         $db = new Database();
+
         $result = $db->get('* FROM `lists` WHERE `userID`=:userID', array(':userID' => $userID));
         
         return $result;
     }
 
     public function getTodoList($listID, $userID) :array {
-        $result = '';
-
+        $result = array();
         $db = new Database();
+
         $result = $db->get('* FROM `lists` WHERE `ID`=:ID AND `userID`=:userID', array(':ID' => $listID, ':userID' => $userID), false);
         
      return $result;
     }
 
     public function getTodoListTasks($userID, $listID = null, $filterDone = false) :array {
-        $result = '';
-        $query = "tasks.ID, tasks.dueDate, tasks.title, tasks.description, tasks.done FROM `tasks` INNER JOIN lists ON (tasks.listID = lists.ID) WHERE lists.userID =:userID";
+        $result = array();
         $data = array();
         $db = new Database();
+
+        $query = "tasks.ID, tasks.dueDate, tasks.title, tasks.description, tasks.done FROM `tasks` INNER JOIN lists ON (tasks.listID = lists.ID) WHERE lists.userID =:userID";
+        
 
         if ($listID) {
             $query .= " AND lists.ID =:listID";
@@ -44,9 +46,9 @@ class ToDoList {
     }
 
     public function getTodoListTask($taskID) :array {
-        $result = "";
-
+        $result = array();
         $db = new Database();
+
         $result = $db->get("dueDate, title, description FROM `tasks` WHERE ID=:taskID", array(":taskID" => $taskID));
         
      return $result;
@@ -70,7 +72,9 @@ class ToDoList {
     }
 
     public function taskDoneToggle($taskID) {
+        $result = array();
         $db = new Database();
+        
         $result = $db->get("done from `tasks` WHERE ID=:ID", array(":ID" => $taskID), false);
         $done = ($result["done"]) ? 0 : 1;
         $db->update("`tasks` set done=:done WHERE ID=:ID", array(":ID" => $taskID, ":done" => $done));

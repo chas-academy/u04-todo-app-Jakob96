@@ -55,7 +55,7 @@ class Database {
 
     public function get($query, $data, $fetchAll = true) :array {
         try {
-            $result = "";
+            $result = array();
 
             $this->execute("SELECT " . $query, $data);
 
@@ -64,6 +64,10 @@ class Database {
             }
             else {
                 $result = $this->stmt->fetch();
+            }
+
+            if (!$result) {
+                $result = array();
             }
 
             return $result;
