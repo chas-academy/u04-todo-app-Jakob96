@@ -1,9 +1,11 @@
-<?php require_once("head.php"); ?>
+<?php 
+
+require_once("head.php"); ?>
   
   <section class="section">
     <div class="container">
       <h1 class="title">
-        Redigera aktivitet
+        <?php echo $pageTitle; ?>
       </h1>
 
     <form method="POST" action="/updateTodoListTask">
@@ -37,4 +39,6 @@
     </form>
     </div>
   </section>
-  <?php require_once("footer.php"); ?>
+  <?php 
+  
+  require_once("footer.php"); ?>

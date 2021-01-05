@@ -19,6 +19,7 @@ session_start();
 
 $request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $toDoList = new ToDoList();
+$pageTitle = "";
 
 Switch ($request) {
     case '/':
@@ -28,24 +29,41 @@ Switch ($request) {
             $todayTasks = array_filter($tasks, function($task) {
                 return $task["dueDate"] == date("Y-m-d");
             });
-        }
+
+            $pageTitle = "Mina aktiviteter";
             require_once("./views/home.php");
+        }
+        else {
+            header("Location: /sign-in");
+        }   
+        break;
+    case '/sign-in':
+        if (!isset($_SESSION['userID'])) {
+            $pageTitle = "Logga in";
+            require_once("./views/sign-in.php");
+        }
+        else {
+            header("Location: /sign-in");
+        }
         break;
     case '/show-lists':
         if (isset($_SESSION['userID'])) {
             $lists = $toDoList->getTodoLists($_SESSION['userID']);
+
+            $pageTitle = "Mina listor";
             require_once("./views/show-lists.php");
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/create-list':
         if (isset($_SESSION['userID'])) {
+            $pageTitle = "Skapa ny Att göra-lista";
             require_once("./views/create-list.php");
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/edit-list':
@@ -54,6 +72,7 @@ Switch ($request) {
             $tasks = $toDoList->getTodoListTasks($_SESSION['userID'], $_GET['listid']);
 
             if (!empty($list)) {
+                $pageTitle = $list["title"];
                 require_once("./views/edit-list.php");
             }
             else {
@@ -61,24 +80,27 @@ Switch ($request) {
             }
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/edit-task':
         if (isset($_SESSION['userID'])) {
             $task = $toDoList->getTodoListTask($_GET['taskid']);
+
+            $pageTitle = "Redigera aktivitet";
             require_once("./views/edit-task.php");
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/add-task':
         if (isset($_SESSION['userID'])) {
+            $pageTitle = "Lägg till ny aktivitet";
             require_once("./views/create-task.php");
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/updateTodoListTask':
@@ -87,7 +109,7 @@ Switch ($request) {
             header("Location: /edit-list?listid=".$_POST['listid']);
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/taskDoneToggle':
@@ -95,7 +117,7 @@ Switch ($request) {
             $toDoList->taskDoneToggle($_POST['taskid']);
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/allTasksDone':
@@ -103,7 +125,7 @@ Switch ($request) {
             $toDoList->allTasksDone($_POST['listid']);
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }   
         break;
     case '/deleteTasksDone':
@@ -111,7 +133,7 @@ Switch ($request) {
             $toDoList->deleteTasksDone($_POST['listid']);
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }   
         break;
     case '/addTodoList':
@@ -121,7 +143,7 @@ Switch ($request) {
             header("Location: /add-task?listid=".$listid);
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/addTodoListTask':
@@ -130,7 +152,7 @@ Switch ($request) {
             header("Location: /edit-list?listid=".$_POST['listid']);
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/deleteTask':
@@ -138,7 +160,7 @@ Switch ($request) {
             $toDoList->deleteTask($_POST['taskid']);
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/deleteList':
@@ -146,30 +168,39 @@ Switch ($request) {
             $toDoList->deleteList($_POST['listid']);
         }
         else {
-            header("Location: /");
+            header("Location: /sign-in");
         }
         break;
     case '/signIn':
-        $user = new User($_POST['email']);
-        if ($user->userExists()) {
-            $user->userLogin();
+        if ($_POST["email"]) {
+           $user = new User($_POST['email']);
+        
+           if ($user->userExists()) {
+              $user->userLogin();
+           }
+           else {
+              $user->registerUser();
+              $user->userLogin();
+           }
+        
+           header("Location: /");
         }
         else {
-            $user->registerUser();
-            $user->userLogin();
+            header("Location: /sign-in");
         }
-        header("Location: /");
+        
         break;
     case '/signOut':
         if (isset($_SESSION['userID'])) {
             user::userSignOut();
-            header("Location: /");
+            header("Location: /sign-in");
         }
         else {
             header("Location: /");
         }
         break;
     default:
+        $pageTitle = "Error 404";
         require_once("./views/404.php");
         break;
 }

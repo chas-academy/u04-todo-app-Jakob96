@@ -1,9 +1,11 @@
-<?php require_once("head.php"); ?>
+<?php 
+
+require_once("head.php"); ?>
   
   <section class="section">
     <div class="container">
       <h1 class="title">
-        Skapa ny Att göra-lista
+        <?php echo $pageTitle; ?>
       </h1>
 
     <form method="POST" action="/addTodoList">
@@ -29,4 +31,6 @@
     </form>
     </div>
   </section>
-  <?php require_once("footer.php"); ?>
+  <?php 
+  
+  require_once("footer.php"); ?>

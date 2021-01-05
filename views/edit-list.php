@@ -1,4 +1,6 @@
-<?php require_once("head.php"); ?>
+<?php 
+
+require_once("head.php"); ?>
 
   <section class="section">
     <div class="container">
@@ -50,4 +52,6 @@
       </div>
     </div>
   </section>
-  <?php require_once("footer.php"); ?>
+  <?php 
+  
+  require_once("footer.php"); ?>

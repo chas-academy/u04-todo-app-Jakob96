@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bulma ToDo App</title>
+    <title>Bulma ToDo <?php echo "| ".$pageTitle; ?></title>
     <link rel="stylesheet" href="/views/css/style.css">
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
     <script defer src="/views/js/script.js"></script>
