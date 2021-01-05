@@ -1,7 +1,7 @@
 <?php
 
 class ToDoList {
-    public function getTodoLists($userID) {
+    public function getTodoLists($userID) :array {
         $result = '';
 
         $db = new Database();
@@ -10,7 +10,7 @@ class ToDoList {
         return $result;
     }
 
-    public function getTodoList($listID, $userID) {
+    public function getTodoList($listID, $userID) :array {
         $result = '';
 
         $db = new Database();
@@ -19,7 +19,7 @@ class ToDoList {
      return $result;
     }
 
-    public function getTodoListTasks($userID, $listID = null, $filterDone = false) {
+    public function getTodoListTasks($userID, $listID = null, $filterDone = false) :array {
         $result = '';
         $query = "tasks.ID, tasks.dueDate, tasks.title, tasks.description, tasks.done FROM `tasks` INNER JOIN lists ON (tasks.listID = lists.ID) WHERE lists.userID =:userID";
         $data = array();
@@ -43,7 +43,7 @@ class ToDoList {
      return $result;
     }
 
-    public function getTodoListTask($taskID) {
+    public function getTodoListTask($taskID) :array {
         $result = "";
 
         $db = new Database();
@@ -52,7 +52,7 @@ class ToDoList {
      return $result;
     }
 
-    public function addTodoList($title, $description, $userID) {
+    public function addTodoList($title, $description, $userID) :int {
         $db = new Database();
         $db->insertInto("`lists` (`ID`, `title`, `description`, `userID`) VALUES (NULL, :title, :description, :userID);", array(":title" => $title, ":description" => $description, ":userID" => $userID));
 

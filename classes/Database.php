@@ -53,9 +53,9 @@ class Database {
         return $this->lastId;
     }
 
-    public function get($query, $data, $fetchAll = true) {
+    public function get($query, $data, $fetchAll = true) :array {
         try {
-            $result;
+            $result = "";
 
             $this->execute("SELECT " . $query, $data);
 
@@ -66,7 +66,6 @@ class Database {
                 $result = $this->stmt->fetch();
             }
 
-            
             return $result;
        } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
