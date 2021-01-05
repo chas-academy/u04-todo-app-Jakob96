@@ -28,10 +28,18 @@
       <a class="navbar-item" href="/show-lists">
         Mina listor
       </a>
-      <a class="navbar-item" href="/signOut">
-        Logga ut
-      </a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+        <?php echo $_SESSION["userEmail"]; ?>
+        </a>
+
+        <div class="navbar-dropdown">
+        <a class="navbar-item" href="/signOut">
+        Logga ut 
+        </a>
+        </div>
     </div>
+  </div>
 
     <div class="navbar-end">
       <div class="navbar-item">
