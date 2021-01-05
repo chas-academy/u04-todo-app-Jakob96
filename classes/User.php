@@ -12,7 +12,7 @@ class User {
     public function userExists() :bool {
         $result = false;
         $db = new Database();
-        
+
         $user = $db->get("* FROM `users` WHERE `email`=:email", array(":email" => $this->email), false);
  
         if ($user) {
@@ -28,9 +28,11 @@ class User {
 
         if ($user) {
             $this->ID = $user["ID"];
+            $this->email = $user["email"];
         }
 
         $_SESSION["userID"] = $this->ID;
+        $_SESSION["userEmail"] = $this->email;
     }
 
     public function registerUser() {
@@ -39,6 +41,6 @@ class User {
     }
 
     public static function userSignOut() {
-        unset($_SESSION["userID"]);
+        unset($_SESSION["userID"], $_SESSION["userEmail"]);
     }
 }
