@@ -170,7 +170,7 @@ Switch ($request) {
         }
         break;
     default:
-        echo "No route found for {$request}.";
+        require_once("./views/404.php");
         break;
 }
 
