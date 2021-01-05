@@ -25,7 +25,7 @@ require_once("head.php"); ?>
       <div class="field">
         <label class="label">Måldatum</label>
         <div class="control">
-        <input type="date" value="<?php echo date('Y-m-d'); ?>">
+        <input type="date" name="dueDate" value="<?php echo date('Y-m-d'); ?>">
         </div>
       </div>
 

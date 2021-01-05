@@ -148,7 +148,7 @@ Switch ($request) {
         break;
     case '/addTodoListTask':
         if (isset($_SESSION['userID'])) {
-            $toDoList->addTask($_POST['listid'], $_POST['tasktitle'], $_POST['taskdescription']);
+            $toDoList->addTask($_POST['listid'], $_POST['tasktitle'], $_POST['taskdescription'], $_POST["dueDate"]);
             header("Location: /edit-list?listid=".$_POST['listid']);
         }
         else {
