@@ -9,7 +9,7 @@ class User {
         $this->email = $email;
     }
 
-    public function userExists() :bool {
+    public function userExists() :bool {    //Check if user email exists in database
         $result = false;
         $db = new Database();
 
@@ -22,7 +22,7 @@ class User {
         return $result;
     }
 
-    public function userLogin() {
+    public function userLogin() {       //Check user email in database and set user id och email session variables to its values
         $db = new Database();
         $user = $db->get("* FROM `users` WHERE `email`=:email", array(":email" => $this->email), false);
 
@@ -35,12 +35,12 @@ class User {
         $_SESSION["userEmail"] = $this->email;
     }
 
-    public function registerUser() {
+    public function registerUser() {    //Registers a new user email
         $db = new Database();
         $db->insertInto("`users` (`ID`, `email`) VALUES (NULL, :email)", array(":email" => $this->email));
     }
 
-    public static function userSignOut() {
+    public static function userSignOut() {      //Sign out a signed in user session
         unset($_SESSION["userID"], $_SESSION["userEmail"]);
     }
 }

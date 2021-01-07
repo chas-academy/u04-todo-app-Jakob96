@@ -1,8 +1,15 @@
 <?php
+
+/*
+This page handles all requests
+
+For debugging, display all error messages during development
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
+*/
 
+//Autoload all classes from /classes
 function autoloader($classname) {
     $filename = "./classes/" . $classname . ".php";
     
@@ -15,13 +22,16 @@ function autoloader($classname) {
 }
 spl_autoload_register("autoloader");
 
+//Used to store session variables when logging in
 session_start();
 
-$request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$toDoList = new ToDoList();
-$pageTitle = "";
+$request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);    //Get the /page-part from URL
+$toDoList = new ToDoList();                                     //Create a new instance of Todolist class
+$pageTitle = "";                                                //Variable used to update the page titles
 
+//Routes to actions and views
 Switch ($request) {
+    //Frontend views:
     case '/':
         if (isset($_SESSION['userID'])) {
             $tasks = $toDoList->getTodoListTasks($_SESSION['userID'], null, true);
@@ -103,6 +113,7 @@ Switch ($request) {
             header("Location: /sign-in");
         }
         break;
+    //Backend - action routes
     case '/updateTodoListTask':
         if (isset($_SESSION['userID'])) {
             $result = $toDoList->updateTodoListTask($_POST['taskid'], $_POST['tasktitle'], $_POST['taskdescription'], $_POST['dueDate']); 
@@ -200,11 +211,8 @@ Switch ($request) {
         }
         break;
     default:
+    //If no route matches, return 404
         $pageTitle = "Error 404";
         require_once("./views/404.php");
         break;
 }
-
-
-
-

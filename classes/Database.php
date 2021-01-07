@@ -83,7 +83,7 @@ class Database {
             }
 
             if (!$result) {
-                $result = array();
+                $result = array();              //If PDO fetch returns false, return an empty array
             }
 
             return $result;
