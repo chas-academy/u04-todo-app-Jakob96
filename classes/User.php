@@ -1,5 +1,9 @@
 <?php
 
+/*
+Class for user actions, like sign in / out and register. 
+*/
+
 class User {
     private $email;
     private $ID;
@@ -31,7 +35,8 @@ class User {
             $this->email = $user["email"];
         }
 
-        $_SESSION["userID"] = $this->ID;
+        //Assigns session variables from the user variable which then will be cleared on sign out.
+        $_SESSION["userID"] = $this->ID;                  
         $_SESSION["userEmail"] = $this->email;
     }
 
